@@ -1,0 +1,65 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Barang {
+  kode_barang  Int          @id @default(autoincrement())
+  nama_barang  String
+  satuan       String
+  harga_satuan Int
+  stok         Int
+  barangNota   BarangNota[]
+
+  @@map("barang")
+}
+
+model Kasir {
+  kode_kasir Int    @id @default(autoincrement())
+  nama_kasir String
+  hp         String
+  nota       Nota[]
+
+  @@map("kasir")
+}
+
+model Tenan {
+  kode_tenan Int    @id @default(autoincrement())
+  nama_tenan String
+  hp         String
+  nota       Nota[]
+
+  @@map("tenan")
+}
+
+model Nota {
+  kode_nota   Int          @id @default(autoincrement())
+  kode_tenan  Int
+  kode_kasir  Int
+  tgl_nota    DateTime     @db.Date
+  jam_nota    String
+  jml_belanja Int
+  diskon      Int
+  total       Int
+  tenan       Tenan        @relation(fields: [kode_tenan], references: [kode_tenan], onDelete: Cascade)
+  kasir       Kasir        @relation(fields: [kode_kasir], references: [kode_kasir], onDelete: Cascade)
+  barangNota  BarangNota[]
+
+  @@map("nota")
+}
+
+model BarangNota {
+  kode_barang_nota Int    @id @default(autoincrement())
+  kode_nota        Int
+  kode_barang      Int
+  jml_barang       Int
+  harga_satuan     Int
+  jumlah           Int
+  nota             Nota   @relation(fields: [kode_nota], references: [kode_nota], onDelete: Cascade)
+  barang           Barang @relation(fields: [kode_barang], references: [kode_barang], onDelete: Cascade)
+
+  @@map("barangnota")
+}
