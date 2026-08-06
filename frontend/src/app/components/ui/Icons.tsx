@@ -16,6 +16,8 @@ import {
   CupSoda,
   Dessert,
   Fish,
+  Clock,
+  MapPin,
   type LucideIcon,
 } from "lucide-react";
 
@@ -34,7 +36,9 @@ const icons = {
   soup: Soup,
   cupSoda: CupSoda,
   dessert: Dessert,
-  fish: Fish
+  fish: Fish,
+  clock: Clock,
+  mapPin: MapPin
 };
 
 type IconName = keyof typeof icons;
